@@ -97,10 +97,16 @@ public class Race
             //print the race positions
             printRace();
             
-            //if any of the three horses has won the race is finished
+            //if any of the three horses has won, the race is finished.
             if ( raceWonBy(lane1Horse) || raceWonBy(lane2Horse) || raceWonBy(lane3Horse) )
             {
                 finished = true;
+            }
+            //if all horses have fallen than the race will end.
+            if (lane1Horse.hasFallen() && lane2Horse.hasFallen() && lane3Horse.hasFallen() ){
+                finished = true;
+                System.out.println("All Horses have fallen so, no one wins!!");
+
             }
            
             //wait for 100 milliseconds
@@ -130,8 +136,8 @@ public class Race
             }
             
             //the probability that the horse will fall is very small (max is 0.1)
-            //but will also will depends exponentially on confidence 
-            //so if you double the confidence, the probability that it will fall is *2
+            //but will also will depends exponentially on confidence,
+            //so if you double the confidence, the probability that it will fall is *. 2
             if (Math.random() < (0.1*theHorse.getConfidence()*theHorse.getConfidence()))
             {
                 theHorse.fall();
@@ -182,7 +188,7 @@ public class Race
     }
     
     /**
-     * print a horse's lane during the race
+     * print a horse's lane during the race,
      * for example
      * |           X                      |
      * to show how far the horse has run
