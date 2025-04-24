@@ -12,11 +12,36 @@ public class RaceWindow {
         frame.setLocationRelativeTo(null); // Center on screen
 
         // Create a JPanel with GridLayout
-        JPanel panel = new JPanel(new GridLayout(4, 4)); // 4 rows, 3 columns
+        JPanel panel = new JPanel(new GridBagLayout()); // 4 rows, 4 columns
+
+        // Create a JComboBox to allow the user to select how many lanes they want.
+        JComboBox<Integer> Lanes = new JComboBox<>();
+        Lanes.addItem(2);
+        Lanes.addItem(3);
+        Lanes.addItem(4);
+        Lanes.addItem(5);
+        Lanes.addItem(6);
+        Lanes.addItem(7);
+        // Label for the lanes ComboBox.
+        JLabel lanesLabel = new JLabel("Select number of lanes:");
+
+        // Create a JComboBox to allow the user to select the track's length
+
+        // Label for the lanes ComboBox.
+        JLabel TrackLengthLabel = new JLabel("Select the length of the track:");
+
+        JComboBox<String> TrackLength = new JComboBox<>();
+        TrackLength.addItem("Short Track");
+        TrackLength.addItem("Normal Track");
+        TrackLength.addItem("Long Track");
 
         // All default values for now to get the layout of the window
-        panel.add(new JTextField("TextField 1"));
-        panel.add(new JTextField("TextField 2"));
+        panel.add(lanesLabel);
+        panel.add(Lanes);
+
+        panel.add(TrackLengthLabel);
+        panel.add(TrackLength);
+
         panel.add(new JTextField("TextField 3"));
         panel.add(new JTextField("TextField 4"));
         panel.add(new JTextField("TextField 5"));
