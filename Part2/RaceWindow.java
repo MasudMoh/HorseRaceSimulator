@@ -15,33 +15,46 @@ public class RaceWindow {
         JPanel panel = new JPanel(new GridBagLayout()); // 4 rows, 4 columns
 
         // Create a JComboBox to allow the user to select how many lanes they want.
-        JComboBox<Integer> Lanes = new JComboBox<>();
-        Lanes.addItem(2);
-        Lanes.addItem(3);
-        Lanes.addItem(4);
-        Lanes.addItem(5);
-        Lanes.addItem(6);
-        Lanes.addItem(7);
+        JComboBox<Integer> lanes = new JComboBox<>();
+        lanes.addItem(2);
+        lanes.addItem(3);
+        lanes.addItem(4);
+        lanes.addItem(5);
+        lanes.addItem(6);
+        lanes.addItem(7);
         // Label for the lanes ComboBox.
         JLabel lanesLabel = new JLabel("Select number of lanes:");
 
-        // Create a JComboBox to allow the user to select the track's length
+        lanes.addActionListener(e -> {
+            Integer selectedLanes = (Integer) lanes.getSelectedItem();
+            if (selectedLanes != null){
+                System.out.println("User selected " + selectedLanes + " lanes.");
+                // To test if the action listener works
+            }
+        });
 
         // Label for the lanes ComboBox.
-        JLabel TrackLengthLabel = new JLabel("Select the length of the track:");
+        JLabel trackLengthLabel = new JLabel("Select the length of the track:");
 
-        JComboBox<String> TrackLength = new JComboBox<>();
-        TrackLength.addItem("Short Track");
-        TrackLength.addItem("Normal Track");
-        TrackLength.addItem("Long Track");
+        // Create a JComboBox to allow the user to select the track's length
+        JComboBox<String> trackLength = new JComboBox<>();
+        trackLength.addItem("Normal Track");
+        trackLength.addItem("Short Track");
+        trackLength.addItem("Long Track");
+
+        trackLength.addActionListener(e -> {
+            String selectedLength = (String) trackLength.getSelectedItem();
+            System.out.println("User selected " + trackLength + " lanes.");
+            // To test if the action listener works
+        });
+
+        panel.add(lanesLabel);
+        panel.add(lanes);
+
+        panel.add(trackLengthLabel);
+        panel.add(trackLength);
 
         // All default values for now to get the layout of the window
-        panel.add(lanesLabel);
-        panel.add(Lanes);
-
-        panel.add(TrackLengthLabel);
-        panel.add(TrackLength);
-
         panel.add(new JTextField("TextField 3"));
         panel.add(new JTextField("TextField 4"));
         panel.add(new JTextField("TextField 5"));
@@ -57,6 +70,35 @@ public class RaceWindow {
         panel.add(new JTextField("TextField 15"));
         panel.add(new JTextField("TextField 16"));
 
+        // Submit button to start the race.
+        JButton submitButton = new JButton("Start Race");
+
+        submitButton.addActionListener(e -> {
+            // Get values from input fields
+            Integer selectedLanes = (Integer) lanes.getSelectedItem(); // Get the selected number of lanes
+            String selectedLength = (String) trackLength.getSelectedItem();
+
+            // Show a message dialog with the inputs
+            JOptionPane.showMessageDialog(frame, "Starting race with " + selectedLanes + " lanes! " + selectedLength);
+
+            try {
+
+                if (selectedLanes != null && selectedLength !=null){
+                    // Create a Race object with the gathered inputs
+                    Race race = new Race(20);
+                    race.startRace(); // Start the race
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame, "Please enter valid values for all fields.");
+                }
+            }
+            catch (NumberFormatException ex){
+                // Handles an invalid number input
+                JOptionPane.showMessageDialog(frame, "Please enter valid numeric values.");
+            }
+        });
+
+        panel.add(submitButton);
 
         // Layout & components
         // JLabel welcomeLabel = new JLabel("🏇 Welcome to the Horse Race!", SwingConstants.CENTER);
