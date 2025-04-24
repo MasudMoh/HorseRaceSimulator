@@ -108,7 +108,7 @@ public class Horse
             confidence = newConfidence;
         }
         else {
-            System.out.println("Confidence rating must be between 0 and 1");
+            System.out.println("Confidence rating must be between 0 and 1, so confidence rating is unchanged");
         }
     }
 
