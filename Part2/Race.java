@@ -11,6 +11,9 @@ import java.lang.Math;
 public class Race
 {
     private int raceLength;
+    private int numberOfLanes;
+    private int numberOfHorses = 3;
+
     private Horse lane1Horse;
     private Horse lane2Horse;
     private Horse lane3Horse;
@@ -21,30 +24,24 @@ public class Race
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(int distance)
+    public Race(int distance, int lanes)
     {
         // initialise instance variables
         raceLength = distance;
+        numberOfLanes = lanes;
 
          lane1Horse = null;
          lane2Horse = null;
          lane3Horse = null;
+         Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.2);
+         Horse Horse2 = new Horse('♞',"KOKOMO",0.2);
+         Horse Horse3 = new Horse('♘',"EL JEFE",0.2);
+
+         lane1Horse = Horse1;
+         lane2Horse = Horse2;
+         lane3Horse = Horse3;
     }
 
-    public static void main(String[] args) {
-        Race R = new Race(20);
-
-        Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.2);
-        Horse Horse2 = new Horse('♞',"KOKOMO",0.2);
-        Horse Horse3 = new Horse('♘',"EL JEFE",0.7);
-
-        R.addHorse(Horse1,1);
-        R.addHorse(Horse2,2);
-        R.addHorse(Horse3,3);
-        R.startRace();
-
-    }
-    
     /**
      * Adds a horse to the race in a given lane
      * 
@@ -173,18 +170,29 @@ public class Race
         
         multiplePrint('=',raceLength+3); //top edge of track
         System.out.println();
-        
-        printLane(lane1Horse);
+
+        // Contains all the horses to be printed in their lanes.
+        //Horse[] horseArray = new Horse[numberOfHorses];
+        Horse[] horseArray = {lane1Horse,lane2Horse,lane3Horse};
+
+
+        //for (int i=0; i< horseArray.length; i++){
+
+        //}
+
+        for (int i=0; i<numberOfLanes; i++) {
+            if (i<horseArray.length) {
+                printLane(horseArray[i]);
+                System.out.println();
+            }
+            else{
+                printLane();
+                System.out.println();
+            }
+        }
+        multiplePrint('=', raceLength + 3); //bottom edge of track
+
         System.out.println();
-        
-        printLane(lane2Horse);
-        System.out.println();
-        
-        printLane(lane3Horse);
-        System.out.println();
-        
-        multiplePrint('=',raceLength+3); //bottom edge of track
-        System.out.println();    
     }
     
     /**
@@ -199,15 +207,17 @@ public class Race
         //and after the horse
         int spacesBefore = theHorse.getDistanceTravelled();
         int spacesAfter = raceLength - theHorse.getDistanceTravelled();
-        
+
         //print a | for the beginning of the lane
         System.out.print('|');
         
         //print the spaces before the horse
         multiplePrint(' ',spacesBefore);
         
-        //if the horse has fallen then print dead
-        //else print the horse's symbol
+        /*
+        if the horse has fallen, then print dead.
+        else print the horse's symbol
+        */
         if(theHorse.hasFallen())
         {
             System.out.print('\u2322');
@@ -223,6 +233,24 @@ public class Race
         //print the | for the end of the track
         System.out.print('|');
     }
+
+    private void printLane()
+    {
+        //calculate how many spaces are needed before
+        //and after the horse
+        int spacesBefore = raceLength+1;
+
+        //print a | for the beginning of the lane
+        System.out.print('|');
+
+        //print the spaces before the horse
+        multiplePrint(' ',spacesBefore);
+
+
+        //print the | for the end of the track
+        System.out.print('|');
+    }
+
         
     
     /***

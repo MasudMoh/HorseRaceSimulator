@@ -25,6 +25,7 @@ public class RaceWindow {
         // Label for the lanes ComboBox.
         JLabel lanesLabel = new JLabel("Select number of lanes:");
 
+
         lanes.addActionListener(e -> {
             Integer selectedLanes = (Integer) lanes.getSelectedItem();
             if (selectedLanes != null){
@@ -34,13 +35,14 @@ public class RaceWindow {
         });
 
         // Label for the lanes ComboBox.
-        JLabel trackLengthLabel = new JLabel("Select the length of the track:");
+        JLabel trackLengthLabel = new JLabel("Select the length of the track (in meters):");
 
         // Create a JComboBox to allow the user to select the track's length
-        JComboBox<String> trackLength = new JComboBox<>();
-        trackLength.addItem("Normal Track");
-        trackLength.addItem("Short Track");
-        trackLength.addItem("Long Track");
+        JComboBox<Integer> trackLength = new JComboBox<>();
+        trackLength.addItem(20);
+        trackLength.addItem(10);
+        trackLength.addItem(30);
+        trackLength.addItem(40);
 
         trackLength.addActionListener(e -> {
             String selectedLength = (String) trackLength.getSelectedItem();
@@ -76,7 +78,7 @@ public class RaceWindow {
         submitButton.addActionListener(e -> {
             // Get values from input fields
             Integer selectedLanes = (Integer) lanes.getSelectedItem(); // Get the selected number of lanes
-            String selectedLength = (String) trackLength.getSelectedItem();
+            Integer selectedLength = (Integer) trackLength.getSelectedItem();
 
             // Show a message dialog with the inputs
             JOptionPane.showMessageDialog(frame, "Starting race with " + selectedLanes + " lanes! " + selectedLength);
@@ -85,7 +87,7 @@ public class RaceWindow {
 
                 if (selectedLanes != null && selectedLength !=null){
                     // Create a Race object with the gathered inputs
-                    Race race = new Race(20);
+                    Race race = new Race(selectedLength, selectedLanes);
                     race.startRace(); // Start the race
                 }
                 else{
