@@ -107,8 +107,12 @@ public class Horse
         if (0<newConfidence && newConfidence<1) {
             confidence = newConfidence;
         }
-        else {
-            System.out.println("Confidence rating must be between 0 and 1, so confidence rating is unchanged");
+        else if (newConfidence > 1){
+            confidence = 1.0;
+        }
+
+        else {// This case is when the new confidence is less than 0;
+            confidence = 0.1;
         }
     }
 
