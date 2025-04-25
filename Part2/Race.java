@@ -6,13 +6,15 @@ import java.lang.Math;
  * for a given distance
  * 
  * @author McRaceface , Masud Mohamoud
- * @version 2.0
+ * @version 3.0
  */
 public class Race
 {
     private int raceLength;
     private int numberOfLanes;
     private int numberOfHorses = 3;
+    private String trackShape;
+    private String weatherCondition;
 
     private Horse lane1Horse;
     private Horse lane2Horse;
@@ -24,22 +26,34 @@ public class Race
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(int distance, int lanes)
+    public Race(int distance, int lanes, String selectedShape, String selectedWeather)
     {
         // initialise instance variables
         raceLength = distance;
         numberOfLanes = lanes;
 
-         lane1Horse = null;
-         lane2Horse = null;
-         lane3Horse = null;
-         Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.2);
-         Horse Horse2 = new Horse('♞',"KOKOMO",0.2);
-         Horse Horse3 = new Horse('♘',"EL JEFE",0.2);
+        trackShape = selectedShape;
+        weatherCondition = selectedWeather;
+
+         Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.4);
+         Horse Horse2 = new Horse('♞',"KOKOMO",0.5);
+         Horse Horse3 = new Horse('♘',"EL JEFE",0.5);
+
 
          lane1Horse = Horse1;
          lane2Horse = Horse2;
          lane3Horse = Horse3;
+
+         if (weatherCondition.equals("Icy")){
+            lane1Horse.setConfidence(lane1Horse.getConfidence()+0.2);
+            lane2Horse.setConfidence(lane2Horse.getConfidence()+0.2);
+            lane3Horse.setConfidence(lane3Horse.getConfidence()+0.2);
+         }
+         else if (weatherCondition.equals("Muddy")){
+             lane1Horse.setConfidence(lane1Horse.getConfidence()-0.2);
+             lane2Horse.setConfidence(lane2Horse.getConfidence()-0.2);
+             lane3Horse.setConfidence(lane3Horse.getConfidence()-0.2);
+         }
     }
 
     /**
