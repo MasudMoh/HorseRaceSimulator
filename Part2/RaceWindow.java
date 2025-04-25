@@ -25,7 +25,7 @@ public class RaceWindow {
         // Label for the lanes ComboBox.
         JLabel lanesLabel = new JLabel("Select number of lanes:");
 
-
+        // Event Listener for lanes
         lanes.addActionListener(e -> {
             Integer selectedLanes = (Integer) lanes.getSelectedItem();
             if (selectedLanes != null){
@@ -33,6 +33,10 @@ public class RaceWindow {
                 // To test if the action listener works
             }
         });
+
+        // Adds the option to pick the number of lanes on the track with its label onto the panel.
+        panel.add(lanesLabel);
+        panel.add(lanes);
 
         // Label for the lanes ComboBox.
         JLabel trackLengthLabel = new JLabel("Select the length of the track (in meters):");
@@ -44,23 +48,63 @@ public class RaceWindow {
         trackLength.addItem(30);
         trackLength.addItem(40);
 
+        // Event Listener for trackLength
         trackLength.addActionListener(e -> {
             String selectedLength = (String) trackLength.getSelectedItem();
-            System.out.println("User selected " + trackLength + " lanes.");
+            System.out.println("User selected a track length of " + trackLength + "m.");
             // To test if the action listener works
         });
 
-        panel.add(lanesLabel);
-        panel.add(lanes);
-
+        // Adds the option to pick the track's lengths onto the panel with its label.
         panel.add(trackLengthLabel);
         panel.add(trackLength);
 
+        // Label for the track's shape.
+        JLabel trackShapeLabel = new JLabel("Select the shape of the track:");
+
+        // ComboBox for the track's shape
+        JComboBox<String> trackShape = new JComboBox<>();
+        trackShape.addItem("Straight");
+        trackShape.addItem("Oval");
+        trackShape.addItem("Figure-eight");
+
+        // Event Listener for trackShape
+        trackShape.addActionListener(e -> {
+            String selectedTrackShape = (String) trackShape.getSelectedItem();
+            System.out.println("User selected the track shape of " + trackShape + ".");
+            // To test if the action listener works
+        });
+
+        // Adds the option to pick the track's shape with its label onto the panel.
+        panel.add(trackShapeLabel);
+        panel.add(trackShape);
+
+
+        // Label for the track's weather condition.
+        JLabel weatherConditionLabel = new JLabel("Select the weather condition of the track:");
+
+        // ComboBox for the track's weather
+        JComboBox<String> weatherCondition = new JComboBox<>();
+        weatherCondition.addItem("Normal");
+        weatherCondition.addItem("Muddy");
+        weatherCondition.addItem("Icy");
+
+        // Event Listener for weatherCondition
+        weatherCondition.addActionListener(e -> {
+            String selectedWeatherCondition = (String) weatherCondition.getSelectedItem();
+            System.out.println("User selected the track condition of " + weatherCondition + ".");
+            // To test if the action listener works
+        });
+
+        // Adds the option to pick the track's shape with its label onto the panel.
+        panel.add(weatherConditionLabel);
+        panel.add(weatherCondition);
+
+
+
+
+
         // All default values for now to get the layout of the window
-        panel.add(new JTextField("TextField 3"));
-        panel.add(new JTextField("TextField 4"));
-        panel.add(new JTextField("TextField 5"));
-        panel.add(new JTextField("TextField 6"));
         panel.add(new JTextField("TextField 7"));
         panel.add(new JTextField("TextField 8"));
         panel.add(new JTextField("TextField 9"));
@@ -77,17 +121,20 @@ public class RaceWindow {
 
         submitButton.addActionListener(e -> {
             // Get values from input fields
-            Integer selectedLanes = (Integer) lanes.getSelectedItem(); // Get the selected number of lanes
-            Integer selectedLength = (Integer) trackLength.getSelectedItem();
+            Integer selectedLanes = (Integer) lanes.getSelectedItem(); // Get the selected number of lanes.
+            Integer selectedLength = (Integer) trackLength.getSelectedItem();// Get the selected track length.
+            String selectedTrackShape = (String) trackShape.getSelectedItem();// Grt the selected shape of the track.
+            String selectedWeatherCondition = (String) weatherCondition.getSelectedItem();// Grt the selected weather condition of the track.
 
-            // Show a message dialog with the inputs
-            JOptionPane.showMessageDialog(frame, "Starting race with " + selectedLanes + " lanes! " + selectedLength);
+
+            // Show a message dialogue with the inputs
+            JOptionPane.showMessageDialog(frame, "Starting race with the track shape " + weatherCondition );
 
             try {
 
-                if (selectedLanes != null && selectedLength !=null){
+                if (selectedLanes != null && selectedLength !=null && selectedTrackShape != null ){
                     // Create a Race object with the gathered inputs
-                    Race race = new Race(selectedLength, selectedLanes);
+                    Race race = new Race(selectedLength, selectedLanes, selectedTrackShape, selectedWeatherCondition);
                     race.startRace(); // Start the race
                 }
                 else{
