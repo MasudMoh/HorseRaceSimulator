@@ -25,25 +25,8 @@ public class Race
     {
         // initialise instance variables
         raceLength = distance;
-
-        Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.2);
-        Horse Horse2 = new Horse('♞',"KOKOMO",0.2);
-        Horse Horse3 = new Horse('♘',"EL JEFE",0.2);
-
-        lane1Horse = Horse1;
-        lane2Horse = Horse2;
-        lane3Horse = Horse3;
     }
 
-    public static void main(String[] args) {
-        Race R = new Race(20);
-
-        R.addHorse(R.lane1Horse ,1);
-        R.addHorse(R.lane2Horse ,2);
-        R.addHorse(R.lane3Horse,3);
-        R.startRace();
-
-    }
     
     /**
      * Adds a horse to the race in a given lane
