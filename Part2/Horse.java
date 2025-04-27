@@ -26,8 +26,8 @@ public class Horse
     public Horse(char horseSymbol, String horseName, double horseConfidence)
     {
        this.name = horseName;
-       this.Symbol = horseSymbol;
-       this.confidence = horseConfidence;
+       setConfidence(horseConfidence);
+       setSymbol(horseSymbol);
     }
 
     //Other methods of class Horse
