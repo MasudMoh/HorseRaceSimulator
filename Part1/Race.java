@@ -26,21 +26,21 @@ public class Race
         // initialise instance variables
         raceLength = distance;
 
-         lane1Horse = null;
-         lane2Horse = null;
-         lane3Horse = null;
+        Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.2);
+        Horse Horse2 = new Horse('♞',"KOKOMO",0.2);
+        Horse Horse3 = new Horse('♘',"EL JEFE",0.2);
+
+        lane1Horse = Horse1;
+        lane2Horse = Horse2;
+        lane3Horse = Horse3;
     }
 
     public static void main(String[] args) {
         Race R = new Race(20);
 
-        Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.2);
-        Horse Horse2 = new Horse('♞',"KOKOMO",0.2);
-        Horse Horse3 = new Horse('♘',"EL JEFE",0.7);
-
-        R.addHorse(Horse1,1);
-        R.addHorse(Horse2,2);
-        R.addHorse(Horse3,3);
+        R.addHorse(R.lane1Horse ,1);
+        R.addHorse(R.lane2Horse ,2);
+        R.addHorse(R.lane3Horse,3);
         R.startRace();
 
     }
@@ -141,6 +141,8 @@ public class Race
             if (Math.random() < (0.1*theHorse.getConfidence()*theHorse.getConfidence()))
             {
                 theHorse.fall();
+                // The horse's confidence decreases as the horse has fallen
+                theHorse.setConfidence(theHorse.getConfidence()-0.1);
             }
         }
     }
@@ -156,6 +158,7 @@ public class Race
         if (theHorse.getDistanceTravelled() == raceLength)
         {
             System.out.println("And the winner is... "+ theHorse.getName() + "!");
+            theHorse.setConfidence(theHorse.getConfidence()+0.1);
             return true;
         }
         else
@@ -210,7 +213,7 @@ public class Race
         //else print the horse's symbol
         if(theHorse.hasFallen())
         {
-            System.out.print('\u2322');
+            System.out.print('❌');
         }
         else
         {
@@ -218,8 +221,15 @@ public class Race
         }
         
         //print the spaces after the horse
-        multiplePrint(' ',spacesAfter);
-        
+        if (theHorse.hasFallen()) {
+            // The red X is larger than the horse's, so I reduced uts space after to not move the finish line.
+            multiplePrint(' ', spacesAfter-1);
+        }
+        else {
+            multiplePrint(' ', spacesAfter);
+        }
+
+
         //print the | for the end of the track
         System.out.print('|');
     }

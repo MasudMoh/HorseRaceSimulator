@@ -3,7 +3,7 @@
  * Write a description of class Horse here.
  * 
  * @author Masud Mohamoud
- * @version 1
+ * @version 2
  */
 public class Horse
 {
@@ -12,10 +12,10 @@ public class Horse
      * Set fields to private for encapsulation
      */
 
-    private String name;
+    private final String name;
     private char Symbol;
     private int distanceTravelled;
-    private boolean fallStatus;
+    private boolean fallStatus = false;
     private double confidence;
     
       
@@ -41,7 +41,7 @@ public class Horse
     }
 
     /**
-     * returns the horses confidence rating. Accessor method.
+     * Returns the horses confidence rating. Accessor method.
      */
     public double getConfidence()
     {
@@ -49,7 +49,7 @@ public class Horse
     }
 
     /**
-     * returns the distance travelled by the horse. Accessor method.
+     * Returns the distance travelled by the horse. Accessor method.
      */
     public int getDistanceTravelled()
     {
@@ -57,7 +57,7 @@ public class Horse
     }
 
     /**
-     * returns the name of the horse name. Accessor method.
+     * Returns the name of the horse name. Accessor method.
      */
     public String getName()
     {
@@ -65,7 +65,7 @@ public class Horse
     }
 
     /**
-     * returns the symbol of the horse. Accessor method.
+     * Returns the symbol of the horse. Accessor method.
      */
     public char getSymbol()
     {
@@ -84,7 +84,7 @@ public class Horse
     }
 
     /**
-     * returns true if fallStatus is true;
+     * Returns true if fallStatus is true;
      */
     public boolean hasFallen()
     {
@@ -100,21 +100,24 @@ public class Horse
     }
 
     /**
-     * sets the horses confidence rating. Mutator method.
+     * Sets the horses confidence rating. Mutator method.
      */
     public void setConfidence(double newConfidence)
     {
         if (0<newConfidence && newConfidence<1) {
             confidence = newConfidence;
         }
-        else {
-            System.out.println("Confidence rating must be between 0 and 1");
-            confidence=0;
+        else if (newConfidence > 1){
+            confidence = 1.0;
+        }
+
+        else {// This case is when the new confidence is less than 0;
+            confidence = 0.1;
         }
     }
 
     /**
-     * sets the horse's symbol. Mutator method.
+     * Sets the horse's symbol. Mutator method.
      */
     public void setSymbol(char newSymbol)
     {
