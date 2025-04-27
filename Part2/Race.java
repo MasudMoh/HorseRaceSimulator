@@ -152,6 +152,7 @@ public class Race
             if (Math.random() < (0.1*theHorse.getConfidence()*theHorse.getConfidence()))
             {
                 theHorse.fall();
+                theHorse.setConfidence(theHorse.getConfidence()-0.1);
             }
         }
     }
@@ -167,6 +168,7 @@ public class Race
         if (theHorse.getDistanceTravelled() == raceLength)
         {
             System.out.println("And the winner is... "+ theHorse.getName() + "!");
+            theHorse.setConfidence(theHorse.getConfidence()+0.1);
             return true;
         }
         else
