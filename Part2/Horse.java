@@ -104,15 +104,15 @@ public class Horse
      */
     public void setConfidence(double newConfidence)
     {
-        if (0<newConfidence && newConfidence<1) {
+        if (newConfidence < 0) {
             confidence = newConfidence;
         }
         else if (newConfidence > 1){
-            confidence = 1.0;
+            confidence = 1;
         }
 
         else {// This case is when the new confidence is less than 0;
-            confidence = 0.1;
+            confidence = newConfidence;
         }
     }
 
@@ -121,7 +121,14 @@ public class Horse
      */
     public void setSymbol(char newSymbol)
     {
-        Symbol = newSymbol;
+        if (newSymbol == ' '){
+            System.out.println("The symbol must be non-empty");
+            Symbol= 'X';
+            fallStatus = true;
+        }
+        else {
+            Symbol = newSymbol;
+        }
     }
     
 }
