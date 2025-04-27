@@ -15,7 +15,7 @@ public class Horse
     private final String name;
     private char Symbol;
     private int distanceTravelled;
-    private boolean fallStatus;
+    private boolean fallStatus = false;
     private double confidence;
     
       
@@ -78,7 +78,7 @@ public class Horse
     public void goBackToStart()
     {
         distanceTravelled = 0;
-        if (fallStatus){
+        if (fallStatus && getSymbol() != 'X'){
             fallStatus= false;
         }
     }
