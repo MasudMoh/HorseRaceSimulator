@@ -121,6 +121,10 @@ public class Horse
      */
     public void setSymbol(char newSymbol)
     {
+        if(newSymbol==' '){
+            System.out.println("The symbol must be non empty");
+            return;
+        }
         Symbol = newSymbol;
     }
     
