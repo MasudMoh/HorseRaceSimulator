@@ -49,16 +49,17 @@ public class RaceWindow {
         JLabel trackLengthLabel = new JLabel("Select the length of the track (in meters):");
 
         // Create a JComboBox to allow the user to select the track's length
-        JComboBox<Integer> trackLength = new JComboBox<>();
-        trackLength.addItem(20);
-        trackLength.addItem(10);
-        trackLength.addItem(30);
-        trackLength.addItem(40);
+        JSlider trackLength = new JSlider();
+        trackLength.setMinimum(5);
+        trackLength.setMaximum(100);
+        trackLength.setValue(20);
+        trackLength.setOrientation(0);
+        trackLength.setMajorTickSpacing(10);
 
         // Event Listener for trackLength
         trackLength.addActionListener(e -> {
             String selectedLength = (String) trackLength.getSelectedItem();
-            System.out.println("User selected a track length of " + trackLength + "m.");
+            System.out.println("User selected a track length of " + selectedLength + "m.");
             // To test if the action listener works
         });
 
@@ -78,7 +79,7 @@ public class RaceWindow {
         // Event Listener for trackShape
         trackShape.addActionListener(e -> {
             String selectedTrackShape = (String) trackShape.getSelectedItem();
-            System.out.println("User selected the track shape of " + trackShape + ".");
+            System.out.println("User selected the track shape of " + selectedTrackShape + ".");
             // To test if the action listener works
         });
 
@@ -99,7 +100,7 @@ public class RaceWindow {
         // Event Listener for weatherCondition
         weatherCondition.addActionListener(e -> {
             String selectedWeatherCondition = (String) weatherCondition.getSelectedItem();
-            System.out.println("User selected the track condition of " + weatherCondition + ".");
+            System.out.println("User selected the track condition of " + selectedWeatherCondition + ".");
             // To test if the action listener works
         });
 
@@ -111,6 +112,23 @@ public class RaceWindow {
         JPanel panel2 = new JPanel(new GridLayout(1,1));
         panel2.setPreferredSize(new Dimension(1200, 425));
         panel2.setBackground(Color.cyan);
+
+        // Label for the horse's name section.
+        JLabel horseNameLabel = new JLabel("Select the horse's name");
+
+        // TextField for the horse's name
+        JTextField horseName = new JTextField();
+
+        // Event Listener for horseName
+        horseName.addActionListener(e -> {
+            String selectedName = horseName.getText();
+            System.out.println("User selected the track condition of " + selectedName  + ".");
+            // To test if the action listener works
+        });
+        // Adds the option to pick the horse's name with its label onto the panel.
+        panel2.add(horseNameLabel);
+        panel2.add(horseName);
+
 
         // Label for the horse's breeds section.
         JLabel horseBreedLabel = new JLabel("Select the horse's breed");
@@ -124,27 +142,32 @@ public class RaceWindow {
         // Event Listener for horseBreed
         horseBreed.addActionListener(e -> {
             String selectedBreed = (String) horseBreed.getSelectedItem();
-            System.out.println("User selected the track condition of " + horseBreed + ".");
+            System.out.println("User selected the track condition of " + selectedBreed  + ".");
             // To test if the action listener works
         });
-        // This keeps track of how many horses has been created.
-        int HorseCounter=0;
-        List<Horse> horseArray = new ArrayList<>();
-
         // Adds the option to pick the track's shape with its label onto the panel.
         panel2.add(horseBreedLabel);
         panel2.add(horseBreed);
+
+        // Array of type Horse
+        List<Horse> horseArray = new ArrayList<>();
 
         JButton addHorseButton = new JButton("Add Horse");
 
         addHorseButton.addActionListener(e -> {
             String selectedBreed = (String) horseBreed.getSelectedItem(); // Get the selected number of lanes.
-            Integer selectedLength = (Integer) trackLength.getSelectedItem();// Get the selected track length.
+            //Integer selectedLength = (Integer) trackLength.getSelectedItem();// Get the selected track length.
 
             // default name, symbol and confidence ratings
             Horse horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.4);
 
-            horseArray.add(horse1);
+            // To only be able to add horses for lanes that are empty
+            if (horseArray.size()<= (Integer) lanes.getSelectedItem()) {
+                horseArray.add(horse1);
+            }
+            else {
+                JOptionPane.showMessageDialog(frame, "Cannot add any more horses as there are no empty lanes left ");
+            }
 
 
         });
@@ -160,9 +183,6 @@ public class RaceWindow {
             Integer selectedLength = (Integer) trackLength.getSelectedItem();// Get the selected track length.
             String selectedTrackShape = (String) trackShape.getSelectedItem();// Get the selected shape of the track.
             String selectedWeatherCondition = (String) weatherCondition.getSelectedItem();// Get the selected weather condition of the track.
-            String[] Horses = (String[]) horseBreed.getSelectedItem();// Get the selected breed for the horse.
-
-
 
             // Show a message dialogue with the inputs
             JOptionPane.showMessageDialog(frame, "Starting race with the track condition " + selectedWeatherCondition);
@@ -171,8 +191,12 @@ public class RaceWindow {
 
                 if (selectedLanes != null && selectedLength !=null && selectedTrackShape != null ){
                     // Create a Race object with the gathered inputs
-                    Race race = new Race(selectedLength, selectedLanes, selectedTrackShape, selectedWeatherCondition);
-                    race.startRace(); // Start the race
+                    Race race = new Race(selectedLength, selectedLanes, selectedTrackShape, selectedWeatherCondition, horseArray);
+                    //Only starts the race if there is at least 1 horse.
+                    if (horseArray.size()>=1) {
+                        race.startRace(); // Start the race
+                    }
+
                 }
                 else{
                     JOptionPane.showMessageDialog(frame, "Please enter valid values for all fields.");

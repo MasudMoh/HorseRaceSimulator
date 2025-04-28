@@ -1,5 +1,7 @@
 import java.util.concurrent.TimeUnit;
 import java.lang.Math;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A three-horse race, each horse running in its own lane
@@ -12,21 +14,16 @@ public class Race
 {
     private int raceLength;
     private int numberOfLanes;
-    private int numberOfHorses = 3;
-    private String trackShape;
+    private String trackShape; //Not implemented yet
     private String weatherCondition;
-
-    private Horse lane1Horse;
-    private Horse lane2Horse;
-    private Horse lane3Horse;
-
+    private List<Horse> arrayOfHorses= new ArrayList<>();
     /**
      * Constructor for objects of class Race
      * Initially there are no horses in the lanes
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(int distance, int lanes, String selectedShape, String selectedWeather)
+    public Race(int distance, int lanes, String selectedShape, String selectedWeather, List<Horse> horseArray)
     {
         // initialise instance variables
         raceLength = distance;
@@ -35,53 +32,34 @@ public class Race
         trackShape = selectedShape;
         weatherCondition = selectedWeather;
 
-        //for (int i=0; i< lanes; i++){
-         Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.4);
-         Horse Horse2 = new Horse('♞',"KOKOMO",0.5);
-         Horse Horse3 = new Horse('♘',"EL JEFE",0.5);
-        //}
 
-         lane1Horse = Horse1;
-         lane2Horse = Horse2;
-         lane3Horse = Horse3;
+        arrayOfHorses = horseArray;
 
          if (weatherCondition.equals("Icy")){
-            lane1Horse.setConfidence(lane1Horse.getConfidence()+0.2);
-            lane2Horse.setConfidence(lane2Horse.getConfidence()+0.2);
-            lane3Horse.setConfidence(lane3Horse.getConfidence()+0.2);
+             for (int i=0; i<arrayOfHorses.size();i++) {
+                 Horse horse = arrayOfHorses.get(i);
+
+                 horse.setConfidence(horse.getConfidence() + 0.2);
+
+                 arrayOfHorses.set(i, horse);
+             }
          }
          else if (weatherCondition.equals("Muddy")){
-             lane1Horse.setConfidence(lane1Horse.getConfidence()-0.2);
-             lane2Horse.setConfidence(lane2Horse.getConfidence()-0.2);
-             lane3Horse.setConfidence(lane3Horse.getConfidence()-0.2);
+             for (int j=0; j<arrayOfHorses.size();j++) {
+                 Horse horse = arrayOfHorses.get(j);
+
+                 horse.setConfidence(horse.getConfidence() - 0.2);
+
+                 arrayOfHorses.set(j, horse);
+             }
          }
     }
 
     /**
-     * Adds a horse to the race in a given lane
-     * 
-     * @param theHorse the horse to be added to the race
-     * @param laneNumber the lane that the horse will be added to
+     * Removed the addHorse method as it was now redundant as the user picks the horses that will race
+     *
      */
-    public void addHorse(Horse theHorse, int laneNumber)
-    {
-        if (laneNumber == 1)
-        {
-            lane1Horse = theHorse;
-        }
-        else if (laneNumber == 2)
-        {
-            lane2Horse = theHorse;
-        }
-        else if (laneNumber == 3)
-        {
-            lane3Horse = theHorse;
-        }
-        else
-        {
-            System.out.println("Cannot add horse to lane " + laneNumber + " because there is no such lane");
-        }
-    }
+
     
     /**
      * Start the race
@@ -94,33 +72,41 @@ public class Race
         //declare a local variable to tell us when the race is finished
         boolean finished = false;
         
-        //reset all the lanes (all horses not fallen and back to 0). 
-        lane1Horse.goBackToStart();
-        lane2Horse.goBackToStart();
-        lane3Horse.goBackToStart();
+        //reset all the lanes (all horses not fallen and back to 0).
+        for (int k=0; k< arrayOfHorses.size(); k++){
+        arrayOfHorses.get(k).goBackToStart();
+        }
                       
         while (!finished)
         {
             //move each horse
-            moveHorse(lane1Horse);
-            moveHorse(lane2Horse);
-            moveHorse(lane3Horse);
+            for (int l=0; l< arrayOfHorses.size(); l++){
+                moveHorse(arrayOfHorses.get(l));
+            }
                         
             //print the race positions
             printRace();
-            
+
+            // a variable that represents the number of fallen horses
+            int ifAllFall =0;
+
             //if any of the three horses has won, the race is finished.
-            if ( raceWonBy(lane1Horse) || raceWonBy(lane2Horse) || raceWonBy(lane3Horse) )
-            {
-                finished = true;
-            }
-            //if all horses have fallen than the race will end.
-            if (lane1Horse.hasFallen() && lane2Horse.hasFallen() && lane3Horse.hasFallen() ){
-                finished = true;
-                System.out.println("All Horses have fallen so, no one wins!!");
+            for (int l=0; l< arrayOfHorses.size(); l++){
+
+                if (raceWonBy(arrayOfHorses.get(l))){
+                    finished = true;
+                }
+                //increments ifAllFall if a horse has fallen
+                if (arrayOfHorses.get(l).hasFallen()){
+                    ifAllFall++;
+                }
+                //checks if all the horses have fallen and ends the race if they have
+                if(ifAllFall == arrayOfHorses.size()){
+                    finished = true;
+                    System.out.println("All Horses have fallen so, no one wins!!");
+                }
 
             }
-           
             //wait for 100 milliseconds
             try{ 
                 TimeUnit.MILLISECONDS.sleep(100);
@@ -188,18 +174,9 @@ public class Race
         multiplePrint('=',raceLength+3); //top edge of track
         System.out.println();
 
-        // Contains all the horses to be printed in their lanes.
-        //Horse[] horseArray = new Horse[numberOfHorses];
-        Horse[] horseArray = {lane1Horse,lane2Horse,lane3Horse};
-
-
-        //for (int i=0; i< horseArray.length; i++){
-
-        //}
-
         for (int i=0; i<numberOfLanes; i++) {
-            if (i<horseArray.length) {
-                printLane(horseArray[i]);
+            if (i<arrayOfHorses.size()) {
+                printLane(arrayOfHorses.get(i));
                 System.out.println();
             }
             else{
