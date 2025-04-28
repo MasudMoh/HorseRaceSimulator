@@ -11,8 +11,9 @@ public class RaceWindow {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null); // Center on screen
 
-        // Create a JPanel with GridLayout
-        JPanel panel = new JPanel(new GridBagLayout()); // 4 rows, 4 columns
+        // Create a JPanel with BorderLayout
+        JPanel panel = new JPanel(new BorderLayout());
+
 
         // Create a JComboBox to allow the user to select how many lanes they want.
         JComboBox<Integer> lanes = new JComboBox<>();
@@ -35,8 +36,8 @@ public class RaceWindow {
         });
 
         // Adds the option to pick the number of lanes on the track with its label onto the panel.
-        panel.add(lanesLabel);
-        panel.add(lanes);
+        panel.add(lanesLabel,BorderLayout.WEST);
+        panel.add(lanes, BorderLayout.WEST);
 
         // Label for the lanes ComboBox.
         JLabel trackLengthLabel = new JLabel("Select the length of the track (in meters):");
@@ -56,8 +57,8 @@ public class RaceWindow {
         });
 
         // Adds the option to pick the track's lengths onto the panel with its label.
-        panel.add(trackLengthLabel);
-        panel.add(trackLength);
+        panel.add(trackLengthLabel, BorderLayout.WEST);
+        panel.add(trackLength, BorderLayout.WEST);
 
         // Label for the track's shape.
         JLabel trackShapeLabel = new JLabel("Select the shape of the track:");
@@ -76,8 +77,8 @@ public class RaceWindow {
         });
 
         // Adds the option to pick the track's shape with its label onto the panel.
-        panel.add(trackShapeLabel);
-        panel.add(trackShape);
+        panel.add(trackShapeLabel, BorderLayout.WEST);
+        panel.add(trackShape, BorderLayout.WEST);
 
 
         // Label for the track's weather condition.
@@ -96,16 +97,43 @@ public class RaceWindow {
             // To test if the action listener works
         });
 
+        // Adds the option to pick the track's condition with its label onto the panel.
+        panel.add(weatherConditionLabel, BorderLayout.WEST);
+        panel.add(weatherCondition, BorderLayout.WEST);
+
+
+
+        // Label for the horse's customisation section.
+        JLabel HorseSectionLabel = new JLabel("Horse customisation");
+
+        panel.add(HorseSectionLabel, BorderLayout.EAST);
+
+        // Label for the horse's breeds section.
+        JLabel horseBreedLabel = new JLabel("Select the horses ");
+
+        // ComboBox for the horse's breed
+        JComboBox<String> horseBreed = new JComboBox<>();
+        weatherCondition.addItem("Thoroughbred");
+        weatherCondition.addItem("Arabian");
+        weatherCondition.addItem("Quarter");
+
+        // Event Listener for horseBreed
+        horseBreed.addActionListener(e -> {
+            String selectedBreed = (String) horseBreed.getSelectedItem();
+            System.out.println("User selected the track condition of " + horseBreed + ".");
+            // To test if the action listener works
+        });
+
         // Adds the option to pick the track's shape with its label onto the panel.
-        panel.add(weatherConditionLabel);
-        panel.add(weatherCondition);
+        panel.add(horseBreedLabel, BorderLayout.EAST);
+        panel.add(horseBreed, BorderLayout.EAST);
 
 
 
 
 
         // All default values for now to get the layout of the window
-        panel.add(new JTextField("TextField 7"));
+        /** panel.add(new JTextField("TextField 7"));
         panel.add(new JTextField("TextField 8"));
         panel.add(new JTextField("TextField 9"));
         panel.add(new JTextField("TextField 10"));
@@ -115,7 +143,7 @@ public class RaceWindow {
         panel.add(new JTextField("TextField 14"));
         panel.add(new JTextField("TextField 15"));
         panel.add(new JTextField("TextField 16"));
-
+        **/
         // Submit button to start the race.
         JButton submitButton = new JButton("Start Race");
 
@@ -123,12 +151,14 @@ public class RaceWindow {
             // Get values from input fields
             Integer selectedLanes = (Integer) lanes.getSelectedItem(); // Get the selected number of lanes.
             Integer selectedLength = (Integer) trackLength.getSelectedItem();// Get the selected track length.
-            String selectedTrackShape = (String) trackShape.getSelectedItem();// Grt the selected shape of the track.
-            String selectedWeatherCondition = (String) weatherCondition.getSelectedItem();// Grt the selected weather condition of the track.
+            String selectedTrackShape = (String) trackShape.getSelectedItem();// Get the selected shape of the track.
+            String selectedWeatherCondition = (String) weatherCondition.getSelectedItem();// Get the selected weather condition of the track.
+            String selectedHorseBreed = (String) horseBreed.getSelectedItem();// Get the selected breed for the horse.
+
 
 
             // Show a message dialogue with the inputs
-            JOptionPane.showMessageDialog(frame, "Starting race with the track shape " + weatherCondition );
+            JOptionPane.showMessageDialog(frame, "Starting race with the track condition " + selectedWeatherCondition);
 
             try {
 
@@ -147,7 +177,7 @@ public class RaceWindow {
             }
         });
 
-        panel.add(submitButton);
+        panel.add(submitButton,BorderLayout.SOUTH);
 
         // Layout & components
         // JLabel welcomeLabel = new JLabel("🏇 Welcome to the Horse Race!", SwingConstants.CENTER);
