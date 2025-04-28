@@ -12,7 +12,7 @@ public class Horse
      * Set fields to private for encapsulation
      */
 
-    private final String name;
+    private String name;
     private char Symbol;
     private int distanceTravelled;
     private boolean fallStatus = false;
@@ -25,7 +25,7 @@ public class Horse
      */
     public Horse(char horseSymbol, String horseName, double horseConfidence)
     {
-       this.name = horseName;
+       setName(horseName);
        setConfidence(horseConfidence);
        setSymbol(horseSymbol);
     }
@@ -62,6 +62,11 @@ public class Horse
     public String getName()
     {
         return name;
+    }
+
+    // Sets the horse's name
+    public  void setName(String horseName){
+        name = horseName;
     }
 
     /**
