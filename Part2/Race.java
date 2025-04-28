@@ -12,11 +12,12 @@ import java.util.ArrayList;
  */
 public class Race
 {
-    private int raceLength;
-    private int numberOfLanes;
-    private String trackShape; //Not implemented yet
-    private String weatherCondition;
-    private List<Horse> arrayOfHorses= new ArrayList<>();
+    private final int raceLength;
+    private final int numberOfLanes;
+    private final String  trackShape; //Not implemented yet
+    private final String weatherCondition;
+    private final List<Horse> arrayOfHorses;
+
     /**
      * Constructor for objects of class Race
      * Initially there are no horses in the lanes
