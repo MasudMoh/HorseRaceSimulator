@@ -105,7 +105,7 @@ public class Horse
     public void setConfidence(double newConfidence)
     {
         if (newConfidence < 0) {
-            confidence = newConfidence;
+            confidence = 0;
         }
         else if (newConfidence > 1){
             confidence = 1;
