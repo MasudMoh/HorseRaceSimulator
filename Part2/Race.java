@@ -55,10 +55,7 @@ public class Race
          }
     }
 
-    /**
-     * Removed the addHorse method as it was now redundant as the user picks the horses that will race
-     *
-     */
+     // Removed the addHorse method as it was now redundant as the user picks the horses that will race
 
     
     /**
@@ -106,6 +103,10 @@ public class Race
                     System.out.println("All Horses have fallen so, no one wins!!");
                 }
 
+                // if the horse's confidence is 0, it will fall
+                if (arrayOfHorses.get(l).getConfidence()==0){
+                    arrayOfHorses.get(l).fall();
+                }
             }
             //wait for 100 milliseconds
             try{ 
