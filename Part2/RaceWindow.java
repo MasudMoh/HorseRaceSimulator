@@ -48,17 +48,20 @@ public class RaceWindow {
         // Label for the lanes ComboBox.
         JLabel trackLengthLabel = new JLabel("Select the length of the track (in meters):");
 
-        // Create a JComboBox to allow the user to select the track's length
+        // Create a Jslider to allow the user to select the track's length
         JSlider trackLength = new JSlider();
         trackLength.setMinimum(5);
         trackLength.setMaximum(100);
         trackLength.setValue(20);
-        trackLength.setOrientation(0);
+        trackLength.setOrientation(JSlider.HORIZONTAL);
         trackLength.setMajorTickSpacing(10);
+        trackLength.setPaintTicks(true);
+        trackLength.setPaintLabels(true);
+
 
         // Event Listener for trackLength
-        trackLength.addActionListener(e -> {
-            String selectedLength = (String) trackLength.getSelectedItem();
+        trackLength.addChangeListener(e -> {
+            Integer selectedLength = (Integer) trackLength.getValue();
             System.out.println("User selected a track length of " + selectedLength + "m.");
             // To test if the action listener works
         });
@@ -108,8 +111,8 @@ public class RaceWindow {
         panel.add(weatherConditionLabel);
         panel.add(weatherCondition);
 
-
-        JPanel panel2 = new JPanel(new GridLayout(1,1));
+        //New Panel for the Horse customisation
+        JPanel panel2 = new JPanel(new GridLayout(4,2));
         panel2.setPreferredSize(new Dimension(1200, 425));
         panel2.setBackground(Color.cyan);
 
@@ -128,6 +131,47 @@ public class RaceWindow {
         // Adds the option to pick the horse's name with its label onto the panel.
         panel2.add(horseNameLabel);
         panel2.add(horseName);
+
+        // Label for the Confidence ComboBox.
+        JLabel ConfidenceLabel = new JLabel("Select the Confidence rating of the horse ");
+
+        // Create a ComboBox to allow the user to select the horse's confidence
+        JComboBox<Double> horseConfidence = new JComboBox<>();
+        horseConfidence.addItem(0.0);
+        horseConfidence.addItem(0.1);
+        horseConfidence.addItem(0.2);
+        horseConfidence.addItem(0.3);
+        horseConfidence.addItem(0.4);
+        horseConfidence.addItem(0.5);
+        horseConfidence.addItem(0.6);
+        horseConfidence.addItem(0.7);
+        horseConfidence.addItem(0.8);
+        horseConfidence.addItem(0.9);
+        horseConfidence.addItem(1.0);
+
+
+        // Event Listener for horseConfidence
+        horseConfidence.addActionListener(e -> {
+            Double selectedHorseConfidence = (Double) horseConfidence.getSelectedItem();
+            System.out.println("User selected the confidence rating of " + selectedHorseConfidence + ".");
+            // To test if the action listener works
+        });
+
+        // Adds the option to pick the track's condition with its label onto the panel.
+        panel2.add(ConfidenceLabel);
+        panel2.add(horseConfidence);
+
+        // Label for the Symbol ComboBox.
+        JLabel symbolLabel = new JLabel("Type the Symbol of the horse");
+
+        // Create a ComboBox to allow the user to select the horse's symbol
+        JComboBox symbol = new JComboBox<>();
+        symbol.addItem('♘');
+        symbol.addItem('♞');
+
+        // Adds the option to pick the track's condition with its label onto the panel.
+        panel2.add(symbolLabel);
+        panel2.add(symbol);
 
 
         // Label for the horse's breeds section.
@@ -152,17 +196,27 @@ public class RaceWindow {
         // Array of type Horse
         List<Horse> horseArray = new ArrayList<>();
 
+
+
         JButton addHorseButton = new JButton("Add Horse");
 
         addHorseButton.addActionListener(e -> {
+            String selectedName = (String) horseName.getText();
             String selectedBreed = (String) horseBreed.getSelectedItem(); // Get the selected number of lanes.
-            //Integer selectedLength = (Integer) trackLength.getSelectedItem();// Get the selected track length.
+            Double selectedHorseConfidence = (Double) horseConfidence.getSelectedItem();
+            char selectedSymbol = (char)symbol.getSelectedItem();
+
 
             // default name, symbol and confidence ratings
             Horse horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.4);
+            horse1.setName(selectedName);
+            horse1.setConfidence(selectedHorseConfidence);
+
+            horse1.setSymbol(selectedSymbol);
+
 
             // To only be able to add horses for lanes that are empty
-            if (horseArray.size()<= (Integer) lanes.getSelectedItem()) {
+            if (horseArray.size()< (Integer) lanes.getSelectedItem()) {
                 horseArray.add(horse1);
             }
             else {
@@ -180,7 +234,7 @@ public class RaceWindow {
         submitButton.addActionListener(e -> {
             // Get values from input fields
             Integer selectedLanes = (Integer) lanes.getSelectedItem(); // Get the selected number of lanes.
-            Integer selectedLength = (Integer) trackLength.getSelectedItem();// Get the selected track length.
+            Integer selectedLength = (Integer) trackLength.getValue();// Get the selected track length.
             String selectedTrackShape = (String) trackShape.getSelectedItem();// Get the selected shape of the track.
             String selectedWeatherCondition = (String) weatherCondition.getSelectedItem();// Get the selected weather condition of the track.
 
@@ -207,9 +261,12 @@ public class RaceWindow {
                 JOptionPane.showMessageDialog(frame, "Please enter valid numeric values.");
             }
         });
+        //New panel for the buttons
         JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panel3.setBackground(Color.orange);
         panel3.setPreferredSize(new Dimension(1200, 50));
+
+        panel3.add(addHorseButton);
 
         panel3.add(submitButton);
 
