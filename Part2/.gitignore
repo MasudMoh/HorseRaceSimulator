@@ -1,0 +1,7 @@
+out/
+.idea/
+*.class
+# Ignore compiled files
+out/
+# Ignore IDE-specific files
+.idea/
