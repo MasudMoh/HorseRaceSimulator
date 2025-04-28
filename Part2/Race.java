@@ -35,10 +35,11 @@ public class Race
         trackShape = selectedShape;
         weatherCondition = selectedWeather;
 
+        //for (int i=0; i< lanes; i++){
          Horse Horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.4);
          Horse Horse2 = new Horse('♞',"KOKOMO",0.5);
          Horse Horse3 = new Horse('♘',"EL JEFE",0.5);
-
+        //}
 
          lane1Horse = Horse1;
          lane2Horse = Horse2;
@@ -236,15 +237,18 @@ public class Race
         */
         if(theHorse.hasFallen())
         {
-            System.out.print('\u2322');
+            System.out.print('❌');
         }
         else
         {
             System.out.print(theHorse.getSymbol());
         }
-        
-        //print the spaces after the horse
-        multiplePrint(' ',spacesAfter);
+        if (theHorse.hasFallen()){
+            multiplePrint(' ',spacesAfter-1);
+        }
+        else {//print the spaces after the horse
+            multiplePrint(' ', spacesAfter);
+        }
         
         //print the | for the end of the track
         System.out.print('|');
