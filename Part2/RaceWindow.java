@@ -112,7 +112,7 @@ public class RaceWindow {
         panel.add(weatherCondition);
 
         //New Panel for the Horse customisation
-        JPanel panel2 = new JPanel(new GridLayout(4,2));
+        JPanel panel2 = new JPanel(new GridLayout(7,2));
         panel2.setPreferredSize(new Dimension(1200, 425));
         panel2.setBackground(Color.cyan);
 
@@ -189,9 +189,49 @@ public class RaceWindow {
             System.out.println("User selected the track condition of " + selectedBreed  + ".");
             // To test if the action listener works
         });
-        // Adds the option to pick the track's shape with its label onto the panel.
+        // Adds the option to pick the horse's breed with its label onto the panel.
         panel2.add(horseBreedLabel);
         panel2.add(horseBreed);
+
+        // Label for the horse's saddle section.
+        JLabel saddleLabel = new JLabel("Select the horse's saddle");
+
+        // ComboBox for the horse's saddle
+        JComboBox<String> saddle = new JComboBox<>();
+        saddle.addItem("Normal");
+        saddle.addItem("Heavy");
+        saddle.addItem("Light-weight");
+
+        // Adds the option to pick the horse's saddle with its label onto the panel.
+        panel2.add(saddleLabel);
+        panel2.add(saddle);
+
+        // Label for the horse's accessory section.
+        JLabel accessoryLabel = new JLabel("Select the horse's accessory");
+
+        // ComboBox for the horse's accessory
+        JComboBox<String> accessory= new JComboBox<>();
+        accessory.addItem("none");
+        accessory.addItem("bridles");
+        accessory.addItem("blankets");
+        accessory.addItem("hats");
+
+        // Adds the option to pick the horse's accessory with its label onto the panel.
+        panel2.add(accessoryLabel);
+        panel2.add(accessory);
+
+        // Label for the horse's horseshoes section.
+        JLabel horseshoeLabel = new JLabel("Select the horse's horseshoes");
+
+        // ComboBox for the horse's horseshoes
+        JComboBox<String> horseshoes = new JComboBox<>();
+        horseshoes.addItem("Normal");
+        horseshoes.addItem("Heavy");
+        horseshoes.addItem("Light-weight");
+
+        // Adds the option to pick the horse's horseshoes with its label onto the panel.
+        panel2.add(horseshoeLabel);
+        panel2.add(horseshoes);
 
         // Array of type Horse
         List<Horse> horseArray = new ArrayList<>();
@@ -201,18 +241,65 @@ public class RaceWindow {
         JButton addHorseButton = new JButton("Add Horse");
 
         addHorseButton.addActionListener(e -> {
-            String selectedName = (String) horseName.getText();
+            String selectedName = horseName.getText();
             String selectedBreed = (String) horseBreed.getSelectedItem(); // Get the selected number of lanes.
             Double selectedHorseConfidence = (Double) horseConfidence.getSelectedItem();
             char selectedSymbol = (char)symbol.getSelectedItem();
+            String selectedSaddle = (String) saddle.getSelectedItem(); // Get the horse's saddle.
+            String selectedAccessory = (String) accessory.getSelectedItem(); // Get the horse's accessory.
+            String selectedHorseshoes = (String) horseshoes.getSelectedItem(); // Get the horse's accessory.
+
+
+
 
 
             // default name, symbol and confidence ratings
-            Horse horse1 = new Horse('♘',"PIPPI LONGSTOCKING",0.4);
+            Horse horse1 = new Horse('♘',"Default horse",0.4);
+
             horse1.setName(selectedName);
+
             horse1.setConfidence(selectedHorseConfidence);
 
             horse1.setSymbol(selectedSymbol);
+
+
+            if (selectedBreed.equals("Arabian")){
+                horse1.setConfidence(horse1.getConfidence()+0.1);
+            }
+
+            if (selectedBreed.equals("Quarter")){
+                horse1.setConfidence(horse1.getConfidence()-0.1);
+            }
+
+
+            if (selectedSaddle.equals("Heavy")){
+                horse1.setConfidence(horse1.getConfidence()+0.2);
+            }
+
+            if (selectedSaddle.equals("Light-weight")){
+                horse1.setConfidence(horse1.getConfidence()-0.2);
+            }
+
+
+            if (selectedAccessory.equals("bridles")){
+                horse1.setConfidence(horse1.getConfidence()+0.1);
+            }
+            if (selectedAccessory.equals("blankets")){
+                horse1.setConfidence(horse1.getConfidence()+0.1);
+            }
+            if (selectedAccessory.equals("hats")){
+                horse1.setConfidence(horse1.getConfidence()+0.1);
+            }
+
+            if (selectedHorseshoes.equals("Heavy")){
+                horse1.setConfidence(horse1.getConfidence()-0.1);
+            }
+            if (selectedHorseshoes.equals("Light-weight")){
+                horse1.setConfidence(horse1.getConfidence()+0.1);
+            }
+
+
+
 
 
             // To only be able to add horses for lanes that are empty
